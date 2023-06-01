@@ -26,9 +26,8 @@ int main() {
         countFile.close();
 
         int currentUrl = 0;
-        int maxUrls = 1000;
 
-        while (std::getline(inputFile, url) && currentUrl < maxUrls) {
+        while (std::getline(inputFile, url)) {
             currentUrl++;
 
             std::string filename = "../data/loaded/" + url.substr(url.find_last_of('/') + 1);
