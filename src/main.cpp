@@ -1,9 +1,9 @@
 #include <fstream>
-#include <curl.h>
-#include "callback.h"
+#include <curl/curl.h>
+#include "../include/callback.h"
 #include <iostream>
 #include <string>
-#include "unzip.h"
+#include "../include/unzip.h"
 
 int main() {
     CURL* curl;
