@@ -17,13 +17,7 @@ int main() {
         std::string url;
 
         // Get the total number of URLs
-        int totalUrls = 0;
-        std::ifstream countFile("../data/NASA_DEM.txt");
-        std::string line;
-        while (std::getline(countFile, line)) {
-            totalUrls++;
-        }
-        countFile.close();
+        int totalUrls = 1015;
 
         int currentUrl = 0;
 
@@ -32,7 +26,7 @@ int main() {
 
             // Extract latitude and longitude values from the URL
             std::string latitudeStr = url.substr(url.find_last_of('/') + 1, 3);
-            std::string longitudeStr = url.substr(url.find_last_of('/') + 5, 4);
+            std::string longitudeStr = url.substr(url.find_last_of('/') + 4, 4);
 
             // Convert latitude and longitude strings to numeric values
             int latitude = std::stoi(latitudeStr.substr(1));
