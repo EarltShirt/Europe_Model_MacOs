@@ -5,8 +5,8 @@
 #include <string>
 #include "../include/unzip.h"
 
-int main() {
-    CURL* curl;
+int CurlRoutine(){
+        CURL* curl;
     CURLcode res;
 
     curl_global_init(CURL_GLOBAL_DEFAULT);
@@ -22,8 +22,6 @@ int main() {
         int currentUrl = 0;
 
         while (std::getline(inputFile, url)) {
-            currentUrl++;
-
             // Extract latitude and longitude values from the URL
             std::string latitudeStr = url.substr(url.find_last_of('/') + 1, 3);
             std::string longitudeStr = url.substr(url.find_last_of('/') + 4, 4);
@@ -42,15 +40,15 @@ int main() {
                 curl_easy_setopt(curl, CURLOPT_WRITEDATA, &file);
 
                 res = curl_easy_perform(curl);
+                
+                currentUrl++;
+                double progress = static_cast<double>(currentUrl) / totalUrls * 100;
+                std::cout << "Progress: " << progress << "%" << std::endl;
 
                 if (res != CURLE_OK) {
                     fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
                     std::cout << "Failed to download URL: " << url << std::endl;
-                } else {
-                    double progress = static_cast<double>(currentUrl) / totalUrls * 100;
-                    std::cout << "Progress: " << progress << "%" << std::endl;
                 }
-
                 file.close();
             }
         }
@@ -60,9 +58,13 @@ int main() {
     }
 
     curl_global_cleanup();
+    return 0;
+}
 
-    std::string zipDirectory = "../data/loaded";
-    std::string extractDirectory = "../data/unzipped";
+
+int main() {
+    // If the files need to be downloaded, uncomment the following line
+    // CurlRoutine();
 
     std::cout << "Unzipping files..." << std::endl;
     unzipAll();
