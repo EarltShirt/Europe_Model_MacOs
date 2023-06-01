@@ -30,3 +30,9 @@
 *.exe
 *.out
 *.app
+
+
+# Project data 
+
+/data/loaded/*
+/build/*
