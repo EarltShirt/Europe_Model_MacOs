@@ -30,24 +30,35 @@ int main() {
         while (std::getline(inputFile, url)) {
             currentUrl++;
 
-            std::string filename = "../data/loaded/" + url.substr(url.find_last_of('/') + 1);
-            std::ofstream file(filename, std::ios::binary);
+            // Extract latitude and longitude values from the URL
+            std::string latitudeStr = url.substr(url.find_last_of('/') + 1, 3);
+            std::string longitudeStr = url.substr(url.find_last_of('/') + 5, 4);
 
-            curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
-            curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
-            curl_easy_setopt(curl, CURLOPT_WRITEDATA, &file);
+            // Convert latitude and longitude strings to numeric values
+            int latitude = std::stoi(latitudeStr.substr(1));
+            int longitude = std::stoi(longitudeStr.substr(1));
 
-            res = curl_easy_perform(curl);
+            // Check if the URL is within the desired latitude and longitude range
+            if (latitude >= 36 && latitude <= 71 && longitude >= 31 && longitude <= 60) {
+                std::string filename = "../data/loaded/" + url.substr(url.find_last_of('/') + 1);
+                std::ofstream file(filename, std::ios::binary);
 
-            if (res != CURLE_OK) {
-                fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
-                std::cout << "Failed to download URL: " << url << std::endl;
-            } else {
-                double progress = static_cast<double>(currentUrl) / totalUrls * 100;
-                std::cout << "Progress: " << progress << "%" << std::endl;
+                curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+                curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+                curl_easy_setopt(curl, CURLOPT_WRITEDATA, &file);
+
+                res = curl_easy_perform(curl);
+
+                if (res != CURLE_OK) {
+                    fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
+                    std::cout << "Failed to download URL: " << url << std::endl;
+                } else {
+                    double progress = static_cast<double>(currentUrl) / totalUrls * 100;
+                    std::cout << "Progress: " << progress << "%" << std::endl;
+                }
+
+                file.close();
             }
-
-            file.close();
         }
 
         inputFile.close();
