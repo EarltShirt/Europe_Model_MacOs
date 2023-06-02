@@ -34,5 +34,5 @@
 
 # Project data 
 
-/data/loaded/*
+/data/*
 /build/*

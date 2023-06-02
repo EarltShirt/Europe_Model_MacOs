@@ -31,6 +31,7 @@ int CurlRoutine(){
             int longitude = std::stoi(longitudeStr.substr(1));
 
             // Check if the URL is within the desired latitude and longitude range
+            // if (latitude == 36 && longitude >= 31 && longitude <= 54) If you want to download only some files
             if (latitude >= 36 && latitude <= 71 && longitude >= 31 && longitude <= 60) {
                 std::string filename = "../data/loaded/" + url.substr(url.find_last_of('/') + 1);
                 std::ofstream file(filename, std::ios::binary);
@@ -64,11 +65,11 @@ int CurlRoutine(){
 
 int main() {
     // If the files need to be downloaded, uncomment the following line
-    // CurlRoutine();
+    CurlRoutine();
 
-    std::cout << "Unzipping files..." << std::endl;
-    unzipAll();
-    std::cout << "All files were unzipped" << std::endl;
+    // std::cout << "Unzipping files..." << std::endl;
+    // unzipAll();
+    // std::cout << "All files were unzipped" << std::endl;
 
     return 0;
 }
