@@ -71,10 +71,10 @@ int main() {
     // std::cout << "Unzipping files..." << std::endl;
     // unzipAll();
     // std::cout << "All files were unzipped" << std::endl;
-    HeightMap heightMap("../data/unzipped/N03E043.hgt");
+    HeightMap heightMap("../data/unzipped/N02W063.hgt");
     
     try {
-        cout << "Height at (0, 0): " << heightMap.getHeight(0, 0) << endl;
+        cout << "Height at (10, 10): " << heightMap.getHeight(100, 100) << endl;
     } catch (const out_of_range& e) {
         cerr << "Error: " << e.what() << endl;
     }
