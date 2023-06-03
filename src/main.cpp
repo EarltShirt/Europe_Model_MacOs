@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include "../include/unzip.h"
+#include "../include/HeightMap.h"
 
 int CurlRoutine(){
         CURL* curl;
@@ -65,11 +66,17 @@ int CurlRoutine(){
 
 int main() {
     // If the files need to be downloaded, uncomment the following line
-    CurlRoutine();
+    // CurlRoutine();
 
     // std::cout << "Unzipping files..." << std::endl;
     // unzipAll();
     // std::cout << "All files were unzipped" << std::endl;
-
+    HeightMap heightMap("../data/unzipped/N03E043.hgt");
+    
+    try {
+        cout << "Height at (0, 0): " << heightMap.getHeight(0, 0) << endl;
+    } catch (const out_of_range& e) {
+        cerr << "Error: " << e.what() << endl;
+    }
     return 0;
 }

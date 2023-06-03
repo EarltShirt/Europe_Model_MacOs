@@ -9,6 +9,6 @@ include_directories(/opt/homebrew/Cellar/libzip/1.9.2/include)
 link_directories(/opt/homebrew/Cellar/curl/8.1.2/lib)
 link_directories(/opt/homebrew/Cellar/libzip/1.9.2/lib)
 
-add_executable(Europe src/main.cpp src/load.cpp src/unzip.cpp)
+add_executable(Europe src/main.cpp src/load.cpp src/unzip.cpp src/HeightMap.cpp)
 
 target_link_libraries(Europe curl zip)
